@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Moana Sailing Team</title>
+<meta name="description" content="Moana Sailing Team: Offshore-Regattateam. Atlantik-Kampagne 2027 bis 2029 mit einer KER 46 in Moana Pigeon Blue.">
+<style>
+@font-face{font-family:"Barlow Condensed";src:url("fonts/barlow-condensed-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Barlow Condensed";src:url("fonts/barlow-condensed-latin-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Barlow Condensed";src:url("fonts/barlow-condensed-latin-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+/* Layout: großes Fastnet-Bild als Auftakt, dann ein ruhiges Raster auf hellem Papier; Pigeon Blue trägt die Flächen, Orange nur als Spi-Akzent. */
+:root{
+  --paper:#f5f7f9;
+  --ink:#10161c;
+  --muted:#56636f;
+  --pigeon:#8eacc9;
+  --pigeon-deep:#4f7499;
+  --pigeon-tint:#dfe8f1;
+  --spi:#f2581e;
+  --line:#d3dce5;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:2px solid var(--spi);outline-offset:3px}
+body:not(.lang-en) .en{display:none!important}
+body.lang-en .de{display:none!important}
+.wrap{width:min(1160px,100% - 40px);margin-inline:auto}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.02;text-wrap:balance;margin:0;letter-spacing:.005em}
+h2{font-size:clamp(2.2rem,5vw,3.6rem);text-transform:uppercase}
+h3{font-size:1.6rem}
+p{margin:0;max-width:62ch}
+.eyebrow{font:400 .78rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--pigeon-deep)}
+section{padding:clamp(64px,9vw,120px) 0}
+.sec-head{display:grid;gap:18px;margin-bottom:44px}
+
+/* Navigation */
+.nav{position:absolute;inset:0 0 auto 0;z-index:5}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+.nav a{color:#fff;text-decoration:none;font:500 .95rem/1 var(--body);opacity:.88}
+.nav a:hover{opacity:1}
+.lang{display:flex;border:1px solid rgba(255,255,255,.5);border-radius:999px;overflow:hidden}
+.lang button{all:unset;cursor:pointer;color:#fff;font:400 .78rem/1 var(--mono);padding:8px 12px;letter-spacing:.08em}
+.lang button[aria-pressed="true"]{background:#fff;color:var(--ink)}
+@media (max-width:820px){.nav ul{display:none}}
+
+/* Hero */
+.hero{position:relative;color:#fff;background:#1d2a36;overflow:hidden}
+.hero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 40%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,18,26,.82) 0%,rgba(10,18,26,.55) 45%,rgba(10,18,26,.05) 80%)}
+.hero > .wrap{position:relative;z-index:2;padding:150px 0 80px;display:grid;gap:26px}
+.hero .logo{width:min(380px,70vw)}
+.hero h1{font-size:clamp(3rem,8vw,6.2rem);text-transform:uppercase;max-width:11ch}
+.hero p{font-size:1.15rem;max-width:44ch;color:#e6edf3}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.btn{display:inline-block;text-decoration:none;font:500 .95rem/1 var(--body);padding:15px 22px;border-radius:2px}
+.btn.primary{background:var(--spi);color:#fff}
+.btn.ghost{border:1px solid rgba(255,255,255,.6);color:#fff}
+.credit{position:absolute;right:14px;bottom:10px;z-index:2;font:400 .7rem/1 var(--mono);color:rgba(255,255,255,.75)}
+
+/* Kennzahlen */
+.stats{background:var(--ink);color:#fff;padding:0}
+.stats .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{padding:34px 24px 34px 0;border-right:1px solid #2b3540;display:grid;gap:8px;align-content:start}
+.stat+.stat{padding-left:24px}
+.stat:last-child{border-right:0}
+.stat .num{font:500 clamp(2rem,4vw,2.9rem)/1 var(--display);font-variant-numeric:tabular-nums;color:var(--pigeon)}
+.stat .lbl{font-size:.9rem;color:#c3ccd5;line-height:1.45}
+@media (max-width:820px){.stats .wrap{grid-template-columns:1fr 1fr}.stat{border-right:0;border-bottom:1px solid #2b3540;padding:26px 12px 26px 0}.stat+.stat{padding-left:0}}
+
+/* Team */
+.team-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,5vw,64px);align-items:start}
+.team-text{display:grid;gap:18px}
+.team-imgs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.team-imgs img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/3}
+.team-imgs img:first-child{grid-column:1/-1;aspect-ratio:16/10}
+@media (max-width:820px){.team-grid{grid-template-columns:1fr}}
+
+.pillars{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:0;border-top:1px solid var(--line)}
+.pillars li{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.95rem}
+.pillars .k{font:400 .8rem/1.9 var(--mono);color:var(--spi)}
+/* Erfolge */
+.results{background:#fff}
+.highlights{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:56px}
+.hl{background:#fff;padding:26px 22px;display:grid;gap:10px;align-content:start}
+.hl .yr{font:400 .78rem/1 var(--mono);color:var(--muted);letter-spacing:.1em}
+.hl .res{font:500 2.2rem/1 var(--display);color:var(--pigeon-deep)}
+.hl .ev{font-size:.95rem;line-height:1.4}
+.tbl-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.95rem;min-width:620px}
+th,td{text-align:left;padding:13px 16px 13px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font:400 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+td.y{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--muted);width:70px}
+td.e{width:38%}
+
+/* Kampagne */
+.campaign{background:var(--pigeon-tint)}
+.route{display:grid;grid-template-columns:repeat(6,1fr);gap:0;position:relative;margin-top:10px}
+.leg{position:relative;padding:34px 18px 0 0;display:grid;gap:8px;align-content:start}
+.leg::before{content:"";position:absolute;top:8px;left:0;right:0;height:2px;background:var(--pigeon)}
+.leg::after{content:"";position:absolute;top:2px;left:0;width:14px;height:14px;border-radius:50%;background:var(--paper);border:2px solid var(--pigeon-deep)}
+.leg.final::after{background:var(--spi);border-color:var(--spi)}
+.leg .when{font:400 .78rem/1 var(--mono);letter-spacing:.1em;color:var(--pigeon-deep);text-transform:uppercase}
+.leg h3{font-size:1.45rem}
+.leg p{font-size:.92rem;color:var(--muted);line-height:1.5}
+.leg .nm{font:400 .8rem/1 var(--mono);color:var(--ink)}
+.tag{display:inline-block;font:400 .7rem/1 var(--mono);letter-spacing:.06em;padding:5px 7px;border:1px dashed var(--pigeon-deep);color:var(--pigeon-deep);width:max-content}
+.miles{margin-top:54px;display:flex;flex-wrap:wrap;align-items:baseline;gap:14px 24px;border-top:1px solid var(--pigeon);padding-top:26px}
+.miles .big{font:500 clamp(2.6rem,6vw,4.4rem)/1 var(--display);font-variant-numeric:tabular-nums}
+@media (max-width:960px){.route{grid-template-columns:1fr 1fr 1fr;row-gap:36px}}
+@media (max-width:560px){.route{grid-template-columns:1fr}.leg{padding:0 0 0 34px}.leg::before{top:0;bottom:-36px;left:7px;right:auto;width:2px;height:auto}.leg::after{top:2px}.leg:last-child::before{display:none}}
+
+/* Boot */
+.boat-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+.boat-img{position:relative}
+.boat-img img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.boat-img figcaption{font-size:.85rem;color:var(--muted);margin-top:10px}
+.specs{display:grid;grid-template-columns:auto 1fr;gap:10px 22px;margin:8px 0 0;font-size:.95rem}
+.specs dt{font:400 .75rem/1.9 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.specs dd{margin:0}
+.swatch{display:flex;align-items:center;gap:14px;margin-top:10px}
+.swatch span.c{width:72px;height:44px;background:var(--pigeon);border:1px solid rgba(0,0,0,.08)}
+.swatch span.t{font:400 .8rem/1.4 var(--mono)}
+@media (max-width:820px){.boat-grid{grid-template-columns:1fr}}
+
+/* Partner */
+.partner{background:var(--ink);color:#fff}
+.partner .eyebrow{color:var(--pigeon)}
+.partner p{color:#c9d2db}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#2b3540;border:1px solid #2b3540}
+.tier{background:var(--ink);padding:30px 26px;display:grid;gap:14px;align-content:start}
+.tier.lead{background:#16212c}
+.tier .kind{font:400 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--spi)}
+.tier ul{margin:0;padding-left:18px;color:#c9d2db;font-size:.95rem;display:grid;gap:6px}
+@media (max-width:900px){.tiers{grid-template-columns:1fr}}
+.contact{margin-top:56px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:22px;border-top:1px solid #2b3540;padding-top:34px}
+.contact .mail{font:500 clamp(1.5rem,3.4vw,2.3rem)/1.1 var(--display)}
+
+.ig{display:inline-flex;align-items:center;gap:8px;margin-top:14px;text-decoration:none;font:400 .9rem/1 var(--mono);color:#fff}
+.ig.dark{color:var(--ink)}
+.ig:hover span{text-decoration:underline}
+.dse summary{cursor:pointer;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+.dse div{display:grid;gap:10px;margin-top:12px;font-size:.82rem;line-height:1.55}
+/* Galerie */
+.gallery{padding:0;background:var(--ink)}
+.strip{display:grid;grid-template-columns:repeat(6,1fr);gap:2px}
+.strip figure{margin:0;position:relative;aspect-ratio:3/4;overflow:hidden}
+.strip img{width:100%;height:100%;object-fit:cover}
+.strip figcaption{position:absolute;left:8px;bottom:6px;font:400 .62rem/1 var(--mono);color:rgba(255,255,255,.8)}
+@media (max-width:820px){.strip{grid-template-columns:repeat(3,1fr)}}
+
+/* Platzhalter, Footer */
+.ph{outline:1px dashed var(--spi);outline-offset:3px;background:rgba(242,88,30,.08)}
+footer{padding:56px 0 64px;font-size:.88rem;color:var(--muted)}
+footer .cols{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:36px}
+footer h4{font:400 .75rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--ink);margin:0 0 14px}
+footer p{max-width:46ch}
+footer .flogo{width:150px;margin-bottom:14px}
+@media (max-width:820px){footer .cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <img class="bg" src="img/fastnet-hero.jpg" alt="Moana am Fastnet Rock, Crew auf der Kante, schwarzes Vorsegel mit orangem Achterliek">
+  <nav class="nav" aria-label="Hauptnavigation">
+    <div class="wrap">
+      <ul>
+        <li><a href="#team"><span class="de">Team</span><span class="en">Team</span></a></li>
+        <li><a href="#erfolge"><span class="de">Erfolge</span><span class="en">Results</span></a></li>
+        <li><a href="#kampagne"><span class="de">Kampagne</span><span class="en">Campaign</span></a></li>
+        <li><a href="#boot"><span class="de">Boot</span><span class="en">Boat</span></a></li>
+        <li><a href="#partner"><span class="de">Partner</span><span class="en">Partners</span></a></li>
+      </ul>
+      <div class="lang" role="group" aria-label="Sprache / Language">
+        <button type="button" id="btn-de" data-l="de" aria-pressed="true">DE</button>
+        <button type="button" id="btn-en" data-l="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </nav>
+  <div class="wrap">
+    <img class="logo" src="img/logo-white.png" alt="moana">
+    <span class="eyebrow" style="color:#c7d6e4"><span class="de">Moana Sailing Team · Amateurteam auf Profiniveau</span><span class="en">Moana Sailing Team · Amateur team, professional standard</span></span>
+    <h1><span class="de">Zurück auf den Atlantik</span><span class="en">Back to the Atlantic</span></h1>
+    <p>
+      <span class="de">Kampagne 2027 bis 2029: Fastnet, Mittelmeer und zweimal über den Atlantik. Mit einer KER 46 in Moana Pigeon Blue. Dafür suchen wir Mitsegler und Partner, die sich beteiligen.</span>
+      <span class="en">Campaign 2027 to 2029: Fastnet, the Mediterranean and two Atlantic crossings. On a KER 46 in Moana Pigeon Blue. We are looking for sailors and partners who want to be part of it.</span>
+    </p>
+    <div class="ctas">
+      <a class="btn primary" href="#partner"><span class="de">Partner werden</span><span class="en">Become a partner</span></a>
+      <a class="btn ghost" href="#kampagne"><span class="de">Zur Kampagne</span><span class="en">See the campaign</span></a>
+    </div>
+  </div>
+  <span class="credit">© James Tomlinson Photography</span>
+</header>
+
+<section class="stats" aria-label="Kennzahlen">
+  <div class="wrap">
+    <div class="stat"><span class="num">1.</span><span class="lbl"><span class="de">IRC 1, Transatlantic Race 2025, Newport nach Cowes</span><span class="en">IRC 1, Transatlantic Race 2025, Newport to Cowes</span></span></div>
+    <div class="stat"><span class="num">Jolie Brise</span><span class="lbl"><span class="de">Cup für die schnellste gesegelte Zeit IRC 1 bis 4, Rolex Fastnet Race 2025</span><span class="en">Cup for fastest elapsed time IRC 1 to 4, Rolex Fastnet Race 2025</span></span></div>
+    <div class="stat"><span class="num">2.</span><span class="lbl"><span class="de">IRC Zero, RORC Transatlantic Race 2024, Lanzarote nach Grenada</span><span class="en">IRC Zero, RORC Transatlantic Race 2024, Lanzarote to Grenada</span></span></div>
+    <div class="stat"><span class="num">13 d 17 h</span><span class="lbl"><span class="de">gesegelte Zeit von Newport nach Cowes, 2025</span><span class="en">elapsed time from Newport to Cowes, 2025</span></span></div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wrap team-grid">
+    <div class="team-text">
+      <span class="eyebrow"><span class="de">Das Team</span><span class="en">The team</span></span>
+      <h2><span class="de">Amateure mit Profi-Anspruch</span><span class="en">Amateurs with a professional standard</span></h2>
+      <p>
+        <span class="de">Das Moana Sailing Team ist ein Amateurteam, das wie ein Profiteam organisiert ist. Jede Kampagne hat einen klaren Plan: feste Rollen an Bord, ein definiertes Wachsystem, dokumentierte Abläufe für Vorbereitung, Sicherheit, Navigation und Logistik. So segeln wir seit über zehn Jahren auf Augenhöhe mit den besten Booten der Flotte.</span>
+        <span class="en">The Moana Sailing Team is an amateur team organised like a professional one. Every campaign follows a clear plan: fixed roles on board, a defined watch system, documented procedures for preparation, safety, navigation and logistics. That is how we have raced on level terms with the best boats in the fleet for more than ten years.</span>
+      </p>
+      <ul class="pillars">
+        <li><span class="k">01</span><span><span class="de">Struktur: feste Rollen, Wachpläne und Tagespläne für jede Regatta</span><span class="en">Structure: fixed roles, watch rotas and day plans for every race</span></span></li>
+        <li><span class="k">02</span><span><span class="de">Vorbereitung: Training, Sicherheitsausbildung, Wetter und Routing</span><span class="en">Preparation: training, safety qualification, weather and routing</span></span></li>
+        <li><span class="k">03</span><span><span class="de">Ergebnis: Klassensiege bei Fastnet, Transatlantic Race und RORC-Regatten</span><span class="en">Results: class wins at the Fastnet, the Transatlantic Race and RORC events</span></span></li>
+      </ul>
+      <p>
+        <span class="de">2024 und 2025 hat die Crew den Atlantik in beide Richtungen auf Regattakurs gequert und dafür den Schlüssel-Preis der Freien Hansestadt Bremen erhalten. Die bisherige Moana ist verkauft. Jetzt geht es um das nächste Boot und die nächste Runde.</span>
+        <span class="en">In 2024 and 2025 the crew raced across the Atlantic in both directions and received the Key Award of the Free Hanseatic City of Bremen for it. The previous Moana has been sold. Now it is about the next boat and the next loop.</span>
+      </p>
+    </div>
+    <div class="team-imgs">
+      <img src="img/crew-cowes-2025.jpg" alt="Crew nach dem Transatlantic Race 2025 in Cowes" loading="lazy">
+      <img src="img/crew-deck-sq.jpg" alt="Crew an Deck vor dem Start" loading="lazy">
+      <img src="img/crew-white.jpg" alt="Crew in weißen Teamshirts auf dem Vorschiff" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="results" id="erfolge">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow"><span class="de">Erfolge</span><span class="en">Results</span></span>
+      <h2><span class="de">Track Record</span><span class="en">Track record</span></h2>
+    </div>
+    <div class="highlights">
+      <div class="hl"><span class="yr">2025</span><span class="res">1. IRC 1</span><span class="ev">Transatlantic Race, Newport → Cowes</span></div>
+      <div class="hl"><span class="yr">2025</span><span class="res">Jolie Brise Cup</span><span class="ev">Rolex Fastnet Race</span></div>
+      <div class="hl"><span class="yr">2025</span><span class="res">1. IRC 1</span><span class="ev">RORC Channel Race</span></div>
+      <div class="hl"><span class="yr">2024</span><span class="res">2. IRC Zero</span><span class="ev">RORC Transatlantic Race, Lanzarote → Grenada</span></div>
+      <div class="hl"><span class="yr">2026</span><span class="res">2. SRS</span><span class="ev"><span class="de">Gotland Runt, Gesamtwertung</span><span class="en">Gotland Runt, overall</span></span></div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th><span class="de">Jahr</span><span class="en">Year</span></th>
+          <th><span class="de">Regatta / Auszeichnung</span><span class="en">Race / award</span></th>
+          <th><span class="de">Ergebnis</span><span class="en">Result</span></th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="campaign" id="kampagne">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow"><span class="de">Die Kampagne 2027 bis 2029</span><span class="en">Campaign 2027 to 2029</span></span>
+      <h2><span class="de">Fastnet, Mittelmeer, Atlantikrunde</span><span class="en">Fastnet, Mediterranean, Atlantic loop</span></h2>
+      <p>
+        <span class="de">Drei Jahre, ein Ziel: die großen Offshore-Klassiker auf einem konkurrenzfähigen Boot. Wir starten mit dem Fastnet 2027, segeln 2028 im Mittelmeer und gehen im Winter 2028/29 auf die Atlantikrunde, mit dem Transatlantic Race nach Cowes als Rückweg und dem Fastnet 2029 als Finale.</span>
+        <span class="en">Three years, one goal: the great offshore classics on a competitive boat. We start with the 2027 Fastnet, race the Mediterranean in 2028 and set off on the Atlantic loop in winter 2028/29, with the Transatlantic Race to Cowes as the way home and the 2029 Fastnet as the finale.</span>
+      </p>
+    </div>
+    <div class="route">
+      <div class="leg">
+        <span class="when">2027</span>
+        <h3>Rolex Fastnet Race</h3>
+        <p><span class="de">Start in Cowes, rund um den Fastnet Rock. Auftakt mit dem neuen Boot.</span><span class="en">Start in Cowes, round the Fastnet Rock. First major race on the new boat.</span></p>
+        <span class="nm">≈ 695 sm</span>
+      </div>
+      <div class="leg">
+        <span class="when">2028</span>
+        <h3><span class="de">Mittelmeer</span><span class="en">Mediterranean</span></h3>
+        <p>Les Voiles de Saint-Tropez <span class="de">und</span><span class="en">and</span> Rolex Middle Sea Race. <span class="de">Danach Überführung auf die Kanaren.</span><span class="en">Then delivery to the Canaries.</span></p>
+        <span class="nm">≈ 606 sm</span>
+      </div>
+      <div class="leg">
+        <span class="when"><span class="de">Jan 2029</span><span class="en">Jan 2029</span></span>
+        <h3>RORC Transatlantic Race</h3>
+        <p><span class="de">Lanzarote nach Grenada, Ost nach West.</span><span class="en">Lanzarote to Grenada, east to west.</span></p>
+        <span class="nm">≈ 3.000 sm</span>
+      </div>
+      <div class="leg">
+        <span class="when"><span class="de">Frühjahr 2029</span><span class="en">Spring 2029</span></span>
+        <h3><span class="de">Karibik</span><span class="en">Caribbean</span></h3>
+        <p><span class="de">RORC Caribbean 600 und weitere Regatten in der Karibik.</span><span class="en">RORC Caribbean 600 and further Caribbean regattas.</span></p>
+        <span class="nm">≈ 600 sm</span>
+      </div>
+      <div class="leg">
+        <span class="when"><span class="de">Juni 2029</span><span class="en">June 2029</span></span>
+        <h3>Transatlantic Race</h3>
+        <p><span class="de">Newport nach Cowes, West nach Ost. Die Rückregatta.</span><span class="en">Newport to Cowes, west to east. The race home.</span></p>
+        <span class="nm">≈ 3.000 sm</span>
+        <span class="tag"><span class="de">Termin noch nicht ausgeschrieben</span><span class="en">Date not yet announced</span></span>
+      </div>
+      <div class="leg final">
+        <span class="when"><span class="de">Sommer 2029</span><span class="en">Summer 2029</span></span>
+        <h3>Rolex Fastnet Race</h3>
+        <p><span class="de">Finale der Kampagne, direkt nach der Ankunft in Cowes.</span><span class="en">Campaign finale, straight after arriving in Cowes.</span></p>
+        <span class="nm">≈ 695 sm</span>
+      </div>
+    </div>
+    <div class="miles">
+      <span class="big">≈ 8.600 sm</span>
+      <p><span class="de">Regattameilen in drei Jahren, ohne Überführungen. Dazu Training und Qualifikationsmeilen ab 2027.</span><span class="en">nautical miles of racing in three years, deliveries not included. Plus training and qualifying miles from 2027.</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="boot">
+  <div class="wrap boat-grid">
+    <figure class="boat-img" style="margin:0">
+      <img src="img/hh-aerial-bow.jpg" alt="Die bisherige Moana in Pigeon Blue von oben, Crew auf der Kante, Les Voiles de Saint-Tropez 2022" loading="lazy">
+      <figcaption>© Heinrich Hecht · <span class="de">Die bisherige Moana. Die KER 46 bekommt denselben Rumpf in Pigeon Blue.</span><span class="en">The previous Moana. The KER 46 will carry the same Pigeon Blue hull.</span></figcaption>
+    </figure>
+    <div class="team-text">
+      <span class="eyebrow"><span class="de">Das Boot</span><span class="en">The boat</span></span>
+      <h2>KER 46</h2>
+      <p><span class="de">Eine KER 46 ist ein reinrassiges Offshore-Rennboot, schnell unter IRC und ORC und gebaut für lange Strecken auf dem offenen Meer. Genau das Boot für Fastnet, Middle Sea Race und den Atlantik.</span><span class="en">The KER 46 is a thoroughbred offshore racer, quick under IRC and ORC and built for long distances on open water. Exactly the boat for the Fastnet, the Middle Sea Race and the Atlantic.</span></p>
+      <dl class="specs">
+        <dt><span class="de">Typ</span><span class="en">Type</span></dt><dd>KER 46</dd>
+        <dt><span class="de">Konstruktion</span><span class="en">Design</span></dt><dd>Jason Ker</dd>
+        <dt><span class="de">Länge</span><span class="en">Length</span></dt><dd>ca. 14 m</dd>
+        <dt><span class="de">Status</span><span class="en">Status</span></dt><dd><span class="de">Boot gesucht, Eigner gesucht</span><span class="en">Boat and owner wanted</span></dd>
+      </dl>
+      <div class="swatch"><span class="c" aria-hidden="true"></span><span class="t">Moana Pigeon Blue</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="partner" id="partner">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow"><span class="de">Partner werden</span><span class="en">Become a partner</span></span>
+      <h2><span class="de">Schon immer im Racemodus über den Atlantik?</span><span class="en">Always wanted to race across the Atlantic?</span></h2>
+      <p><span class="de">Wir suchen Menschen, die das selbst erleben wollen. Wer sich an der Kampagne beteiligt, segelt mit: als Teil der Crew, im Wachsystem, mit Training vorab und auf dem Niveau, auf dem wir seit Jahren Klassen gewinnen.</span><span class="en">We are looking for people who want to experience it first-hand. Whoever backs the campaign sails with us: as part of the crew, on watch, with training beforehand and at the level at which we have been winning classes for years.</span></p>
+    </div>
+    <div class="tiers">
+      <div class="tier lead">
+        <span class="kind"><span class="de">Mitsegeln und beteiligen</span><span class="en">Join and sail</span></span>
+        <h3><span class="de">Ihr Platz an Bord</span><span class="en">Your berth on board</span></h3>
+        <ul>
+          <li><span class="de">Fester Crewplatz bei Etappen Ihrer Wahl, vom Fastnet bis zur Atlantikrunde</span><span class="en">A fixed crew berth on legs of your choice, from the Fastnet to the Atlantic loop</span></li>
+          <li><span class="de">Training und Vorbereitung mit dem Team, inklusive Sicherheitsausbildung</span><span class="en">Training and preparation with the team, including safety qualification</span></li>
+          <li><span class="de">Beteiligung an der Kampagne nach Umfang und Etappen</span><span class="en">Contribution to the campaign according to scope and legs</span></li>
+        </ul>
+      </div>
+      <div class="tier">
+        <span class="kind"><span class="de">Namensgeber</span><span class="en">Naming partner</span></span>
+        <h3><span class="de">Die Kampagne trägt Ihren Namen</span><span class="en">The campaign carries your name</span></h3>
+        <ul>
+          <li><span class="de">Ihr Name oder Ihre Marke auf Rumpf, Segel und Crewbekleidung</span><span class="en">Your name or brand on hull, sails and crew kit</span></li>
+          <li><span class="de">Mitsegeln und Gastsegeln für Kunden und Mitarbeitende</span><span class="en">Sailing on board, plus guest sailing for clients and staff</span></li>
+          <li><span class="de">Bilder und Geschichten von jeder Regatta</span><span class="en">Images and stories from every race</span></li>
+        </ul>
+      </div>
+      <div class="tier">
+        <span class="kind"><span class="de">Eigner</span><span class="en">Owner</span></span>
+        <h3><span class="de">Boot kaufen, wir segeln es</span><span class="en">You buy the boat, we race it</span></h3>
+        <ul>
+          <li><span class="de">Sie erwerben die KER 46, das Team chartert sie zu fairen Konditionen</span><span class="en">You acquire the KER 46, the team charters it on fair terms</span></li>
+          <li><span class="de">Betrieb, Pflege und Regattavorbereitung durch die Crew</span><span class="en">Operation, maintenance and race preparation by the crew</span></li>
+          <li><span class="de">Mitsegeln bei den Regatten Ihrer Wahl</span><span class="en">Sail on board at the races of your choice</span></li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:22px;font-size:.92rem"><span class="de">Auch Ausrüster und Dienstleister sind willkommen: Material, Segel, Elektronik oder Logistik gegen Präsenz an Bord und Praxistest unter Offshore-Bedingungen.</span><span class="en">Suppliers and service partners are welcome too: equipment, sails, electronics or logistics in exchange for presence on board and real-world testing offshore.</span></p>
+    <div class="contact">
+      <div>
+        <span class="eyebrow"><span class="de">Kontakt</span><span class="en">Contact</span></span>
+        <div class="mail">kontakt@moanasailing.de</div>
+        <a class="ig" href="https://www.instagram.com/moanasailingteam/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg><span>@moanasailingteam</span></a>
+      </div>
+      <a class="btn primary" href="mailto:kontakt@moanasailing.de"><span class="de">E-Mail schreiben</span><span class="en">Send an email</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" aria-label="Galerie">
+  <div class="strip">
+    <figure><img src="img/atlantic-sea.jpg" alt="Schwere See auf dem Atlantik, Crew auf der Kante" loading="lazy"></figure>
+    <figure><img src="img/fastnet-rock.jpg" alt="Fastnet Rock unter dem Großbaum" loading="lazy"></figure>
+    <figure><img src="img/hh-stern.jpg" alt="Crew im Cockpit, Moana-Schriftzug am Heck, Saint-Tropez 2022" loading="lazy"><figcaption>© Heinrich Hecht</figcaption></figure>
+    <figure><img src="img/cowes-town.jpg" alt="Moana vor Cowes" loading="lazy"></figure>
+    <figure><img src="img/hh-aerial-top.jpg" alt="Moana von oben unter vollen Segeln, Saint-Tropez 2022" loading="lazy"><figcaption>© Heinrich Hecht</figcaption></figure>
+    <figure><img src="img/fastnet-bow.jpg" alt="Blick über den Bug auf den Fastnet Rock" loading="lazy"></figure>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap cols">
+    <div>
+      <img class="flogo" src="img/logo-black.png" alt="moana">
+      <p><span class="de">Moana Sailing Team. Offshore-Regattateam.</span><span class="en">Moana Sailing Team. Offshore racing team.</span></p>
+      <a class="ig dark" href="https://www.instagram.com/moanasailingteam/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg><span>@moanasailingteam</span></a>
+    </div>
+    <div id="impressum">
+      <h4><span class="de">Impressum</span><span class="en">Legal notice</span></h4>
+      <p>Moana Sailing Team (<span class="de">Verein in Gründung</span><span class="en">association in formation</span>)<br><span class="de">Verantwortlich:</span><span class="en">Responsible:</span> Lorenz Pinck<br>Eppendorfer Weg 278<br>20251 Hamburg<br>kontakt@moanasailing.de</p>
+    </div>
+    <div id="datenschutz">
+      <h4><span class="de">Datenschutz und Bildnachweis</span><span class="en">Privacy and credits</span></h4>
+      <details class="dse">
+        <summary><span class="de">Datenschutzerklärung lesen</span><span class="en">Read privacy policy</span></summary>
+        <div class="de">
+          <p>Verantwortlich für die Datenverarbeitung auf dieser Webseite: Lorenz Pinck, Eppendorfer Weg 278, 20251 Hamburg, kontakt@moanasailing.de.</p>
+          <p>Hosting: Die Seite wird bei Netlify, Inc., 512 2nd Street, San Francisco, CA 94107, USA gehostet. Beim Aufruf verarbeitet Netlify technisch notwendige Daten wie IP-Adresse, Datum und Uhrzeit, aufgerufene Seite und Browsertyp in Server-Logfiles. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO, unser berechtigtes Interesse an einem sicheren und stabilen Betrieb. Die Übermittlung in die USA stützt sich auf das EU-US Data Privacy Framework und Standardvertragsklauseln.</p>
+          <p>Wir setzen keine Cookies, kein Tracking und keine Analyse-Tools ein. Schriften werden von unserem eigenen Server geladen.</p>
+          <p>Kontakt per E-Mail: Wenn Sie uns schreiben, verarbeiten wir Ihre Angaben nur zur Bearbeitung Ihrer Anfrage (Art. 6 Abs. 1 lit. b und f DSGVO) und löschen sie, wenn sie nicht mehr benötigt werden.</p>
+          <p>Instagram: Unsere Seite enthält nur einen einfachen Link zu Instagram. Erst wenn Sie ihn anklicken, werden Sie zu Instagram (Meta Platforms Ireland Ltd.) weitergeleitet, dort gilt deren Datenschutzerklärung.</p>
+          <p>Ihre Rechte: Sie haben das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit und Widerspruch sowie das Recht auf Beschwerde bei einer Datenschutzaufsichtsbehörde, z. B. dem Hamburgischen Beauftragten für Datenschutz und Informationsfreiheit.</p>
+        </div>
+        <div class="en">
+          <p>Controller: Lorenz Pinck, Eppendorfer Weg 278, 20251 Hamburg, Germany, kontakt@moanasailing.de.</p>
+          <p>Hosting: This site is hosted by Netlify, Inc., 512 2nd Street, San Francisco, CA 94107, USA. When you visit, Netlify processes technically necessary data such as IP address, date and time, requested page and browser type in server log files. Legal basis is Art. 6(1)(f) GDPR, our legitimate interest in secure and stable operation. Transfers to the USA rely on the EU-US Data Privacy Framework and standard contractual clauses.</p>
+          <p>We use no cookies, no tracking and no analytics. Fonts are served from our own server.</p>
+          <p>Email: If you write to us, we process your details only to handle your enquiry (Art. 6(1)(b) and (f) GDPR) and delete them once no longer needed.</p>
+          <p>Instagram: This site contains a plain link to Instagram. Only when you click it are you taken to Instagram (Meta Platforms Ireland Ltd.), where their privacy policy applies.</p>
+          <p>Your rights: access, rectification, erasure, restriction, data portability and objection, and the right to lodge a complaint with a supervisory authority, e.g. the Hamburg Commissioner for Data Protection and Freedom of Information.</p>
+        </div>
+      </details>
+      <p style="margin-top:10px"><span class="de">Fotos:</span><span class="en">Photos:</span> James Tomlinson Photography, Heinrich Hecht, Moana Sailing Team</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const R=[
+["2026","Gotland Runt","Gotland Runt","2. Platz SRS gesamt, 1. Platz der nach SRS gewerteten ORC-Gruppe, 2. Platz ORCi","2nd SRS overall, 1st ORC group scored under SRS, 2nd ORCi"],
+["2025","Rolex Fastnet Race","Rolex Fastnet Race","Jolie Brise Cup für die schnellste gesegelte Zeit IRC 1 bis 4. 6. IRC 1A, 13. IRC 1, 50. IRC Overall","Jolie Brise Cup for fastest elapsed time IRC 1 to 4. 6th IRC 1A, 13th IRC 1, 50th IRC Overall"],
+["2025","Transatlantic Race, Newport nach Cowes","Transatlantic Race, Newport to Cowes","1. Platz IRC 1. Gesegelte Zeit 13 d 17 h 29 min 52 s","1st IRC 1. Elapsed time 13 d 17 h 29 min 52 s"],
+["2025","RORC Channel Race","RORC Channel Race","1. Platz IRC 1","1st IRC 1"],
+["2025","Schlüssel-Preis der Freien Hansestadt Bremen","Key Award of the Free Hanseatic City of Bremen","Auszeichnung für die herausragende Mannschaftsleistung, insbesondere beim Transatlantic Race 2025","Award for outstanding team performance, in particular at the Transatlantic Race 2025"],
+["2024","RORC Transatlantic Race, Lanzarote nach Grenada","RORC Transatlantic Race, Lanzarote to Grenada","2. Platz IRC Zero, 4. Platz IRC Overall. Gesegelte Zeit 14 d 13 h 49 min 49 s","2nd IRC Zero, 4th IRC Overall. Elapsed time 14 d 13 h 49 min 49 s"],
+["2024","ORC-Weltmeisterschaft, Newport","ORC World Championship, Newport","3. Platz Class 0 im Long Offshore Race","3rd Class 0 in the Long Offshore Race"],
+["2023","Yachting Malta Coastal Race","Yachting Malta Coastal Race","3. Platz IRC Class 3, 6. Platz IRC Overall","3rd IRC Class 3, 6th IRC Overall"],
+["2022","ORC-Weltmeisterschaft, Porto Cervo","ORC World Championship, Porto Cervo","9. Platz von 20 Booten in Class A","9th of 20 boats in Class A"],
+["2021","Flensburger Fördewoche, Flensburger Pilsener Cup","Flensburger Fördewoche, Flensburger Pilsener Cup","3. Platz ORCi Gruppe A, 4. Platz ORCi gesamt","3rd ORCi Group A, 4th ORCi overall"],
+["2021","Flensburger Fördewoche, Blau-Gelbes Band","Flensburger Fördewoche, Blau-Gelbes Band","3. Platz der Sonderwertung","3rd in the special classification"],
+["2020","Kieler Woche, Welcome Race","Kiel Week, Welcome Race","2. Platz ORC Club","2nd ORC Club"],
+["2020","Flensburger Fördewoche, NOSPA Cup","Flensburger Fördewoche, NOSPA Cup","2. Platz ORCi","2nd ORCi"],
+["2020","Flensburger Fördewoche, Flensburger Pilsener Cup","Flensburger Fördewoche, Flensburger Pilsener Cup","2. Platz ORCi","2nd ORCi"],
+["2020","Flensburger Fördewoche, Blau-Gelbes Band","Flensburger Fördewoche, Blau-Gelbes Band","3. Platz der Sonderwertung","3rd in the special classification"],
+["2018","Pantaenius Rund Skagen","Pantaenius Rund Skagen","1. Platz ORCi 1, 6. Platz ORCi gesamt","1st ORCi 1, 6th ORCi overall"],
+["2018","Nordseewoche, Capitell-Cup Rund Helgoland","North Sea Week, Capitell Cup Round Heligoland","2. Platz ORCi 1","2nd ORCi 1"],
+["2018","Nordseewoche, Early Bird Sundowner","North Sea Week, Early Bird Sundowner","3. Platz ORCi 1","3rd ORCi 1"],
+["2016","BlueRibbonCup","BlueRibbonCup","1. Platz ORC Club Full Crew, GPH unter 660","1st ORC Club Full Crew, GPH below 660"],
+["2013","Giraglia Rolex Cup, Inshore-Serie","Giraglia Rolex Cup, inshore series","Ein Wettfahrtsieg und ein 2. Platz in ORC A, 8. Platz der Serie","One race win and one 2nd in ORC A, 8th in the series"]
+];
+const tb=document.getElementById('rows');
+tb.innerHTML=R.map(r=>`<tr><td class="y">${r[0]}</td><td class="e"><span class="de">${r[1]}</span><span class="en">${r[2]}</span></td><td><span class="de">${r[3]}</span><span class="en">${r[4]}</span></td></tr>`).join('');
+function setLang(l){
+  document.body.classList.toggle('lang-en',l==='en');
+  document.documentElement.lang=l;
+  document.querySelectorAll('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===l?'true':'false'));
+  try{localStorage.setItem('igm-lang',l)}catch(e){}
+}
+document.querySelectorAll('.lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));
+let saved=null;try{saved=localStorage.getItem('igm-lang')}catch(e){}
+if(saved==='en')setLang('en');
+</script>
+</body>
+</html>
